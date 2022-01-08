@@ -63,16 +63,17 @@ def call_api_for_duration(origin: str, destination: str, api_key: str) -> Union[
 
 
 def main():
-	api_key_config = configparser.ConfigParser()
-	api_key_config.read('/Users/daniel/projects/commuter/conf/secrets/api_keys.conf')
-
-	places = configparser.ConfigParser()
-	places.read('/Users/daniel/projects/commuter/conf/secrets/places.conf')
+	secrets_conf = configparser.ConfigParser()
+	secrets_conf.read('/Users/daniel/projects/commuter/conf/secrets/secrets.conf')
+	
+	google_maps_api_key = secrets_conf['api_keys']['google_maps_api_key']
+	home = secrets_conf['places']['home']
+	work = secrets_conf['places']['work']
 
 	parsed_api_response = call_api_for_duration(
-		origin = places['DEFAULT']['home'],
-		destination = places['DEFAULT']['work'],
-		api_key = api_key_config['api_keys']['google_maps_api_key']
+		origin = home,
+		destination = work,
+		api_key = google_maps_api_key
 		)
 
 	logging.info(f"Retrieved and parsed api response {parsed_api_response}")

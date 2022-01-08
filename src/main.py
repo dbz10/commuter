@@ -12,14 +12,12 @@ logging.basicConfig(
 	)
 
 def main():
-	api_key_config = configparser.ConfigParser()
-	api_key_config.read('/Users/daniel/projects/commuter/conf/secrets/api_keys.conf')
-	google_maps_api_key = api_key_config['api_keys']['google_maps_api_key']
-
-	places = configparser.ConfigParser()
-	places.read('/Users/daniel/projects/commuter/conf/secrets/places.conf')
-	home = places['DEFAULT']['home']
-	work = places['DEFAULT']['work']
+	secrets_conf = configparser.ConfigParser()
+	secrets_conf.read('/Users/daniel/projects/commuter/conf/secrets/secrets.conf')
+	
+	google_maps_api_key = secrets_conf['api_keys']['google_maps_api_key']
+	home = secrets_conf['places']['home']
+	work = secrets_conf['places']['work']
 
 	home_to_work_response = call_api_for_duration(
 		origin = home, 
